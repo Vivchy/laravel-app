@@ -32,10 +32,29 @@ Route::get('/second', [FirstController::class, 'second']);
 
 Route::get('/learn', [LearnController::class, 'index']);
 
-Route::get('/post/create', [PostController::class, 'create']);
+Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
 
-Route::get('/posts', [PostController::class, 'index']);
 
-Route::get('post/update', [PostController::class, 'update']);
+Route::get('/oldpost/update', [PostController::class, 'update']);
 
-Route::get('/post/delete', [PostController::class, 'delete']);
+Route::get('/oldpost/delete', [PostController::class, 'delete']);
+
+Route::get('/oldpost/first', [PostController::class, 'firstOrCreate']);
+
+Route::get('/oldpost/uporc', [PostController::class, 'updateOrCreate']);
+
+// =================   CRUD  ======================
+
+Route::get('/posts', [PostController::class, 'index'])->name('post.index');
+
+Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');
+
+Route::post('/posts', [PostController::class, 'store'])->name('post.store');
+
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('post.show');
+
+Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+
+Route::put('/posts/{post}', [PostController::class,  'update'])->name('post.update');
+
+Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('post.destroy');
