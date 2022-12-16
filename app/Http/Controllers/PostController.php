@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -11,9 +13,17 @@ class PostController extends Controller
         $data = request()->validate([
             'title'=>'string',
             'content'=>'string',
-            'author'=>'string'
+            'author'=>'string',
+            'category_id'=> '',
+            'tags' => ''
         ]);
-        Post::create($data);
+
+        $tags = $data['tags'];
+        unset($data['tags']);
+
+        $post = Post::create($data);
+        $post->tags()->attach($tags);
+
         return redirect()->route('post.index');
     }
     public function show(Post $post){
@@ -21,15 +31,23 @@ class PostController extends Controller
         return view('post.show', compact('post'));
     }
     public function edit(Post $post){
-        return view('post.edit', compact('post'));
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('post.edit', compact('post', 'categories', 'tags'));
     }
     public function update(Post $post){
         $data = request()->validate([
             'title'=>'string',
             'content'=>'string',
-            'author'=>'string'
+            'author'=>'string',
+            'category_id' => '',
+            'tags' => ''
         ]);
+        $tags = $data['tags'];
+        unset($data['tags']);
+
         $post->update($data);
+        $post->tags()->sync($tags);
         return redirect()->route('post.index');
     }
     public function destroy(Post $post){
@@ -37,9 +55,9 @@ class PostController extends Controller
         return redirect()->route('post.index');
     }
     public function create(){
-
-
-        return view('post.create');
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('post.create', compact('categories', 'tags'));
     }
 
     public function index(){
