@@ -11,9 +11,9 @@ class PostController extends Controller
 {
     public function store(){
         $data = request()->validate([
-            'title'=>'string',
-            'content'=>'string',
-            'author'=>'string',
+            'title'=>'required|string',
+            'content'=>'required|string',
+            'author'=>'required|string',
             'category_id'=> '',
             'tags' => ''
         ]);
