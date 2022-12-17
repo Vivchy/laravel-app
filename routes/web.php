@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Post;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FirstController;
 use App\Http\Controllers\LearnController;
@@ -44,17 +45,19 @@ Route::get('/oldpost/first', [PostController::class, 'firstOrCreate']);
 Route::get('/oldpost/uporc', [PostController::class, 'updateOrCreate']);
 
 // =================   CRUD  ======================
+Route::group(['namespace'=> 'App\Http\Controllers\Post'], function() {
 
-Route::get('/posts', [PostController::class, 'index'])->name('post.index');
+    Route::get('/posts', 'IndexController')->name('post.index');
 
-Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');
+    Route::get('/posts/create', 'CreateController')->name('post.create');
 
-Route::post('/posts', [PostController::class, 'store'])->name('post.store');
+    Route::post('/posts', 'StoreController')->name('post.store');
 
-Route::get('/posts/{post}', [PostController::class, 'show'])->name('post.show');
+    Route::get('/posts/{post}', 'ShowController')->name('post.show');
 
-Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+    Route::get('/posts/{post}/edit', 'EditController')->name('post.edit');
 
-Route::put('/posts/{post}', [PostController::class,  'update'])->name('post.update');
+    Route::put('/posts/{post}', 'UpdateController')->name('post.update');
 
-Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('post.destroy');
+    Route::delete('/posts/{post}', 'DestroyController')->name('post.destroy');
+});
