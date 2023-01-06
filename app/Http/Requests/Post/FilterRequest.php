@@ -24,9 +24,9 @@ class FilterRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required|string',
-            'content'=>'required|string',
-            'author'=>'required|string',
+            'title'=>'string',
+            'content'=>'string',
+            'author'=>'string',
             'category_id'=> '',
             'tags' => ''
         ];

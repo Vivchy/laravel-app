@@ -19,7 +19,7 @@
                 </div>
             </div>
         @endforeach
-        <div>{{ $posts->links() }}</div>
+        <div>{{ $posts->withQueryString()->links() }}</div>
 
     </div>
 
