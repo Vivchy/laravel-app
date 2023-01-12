@@ -11,7 +11,9 @@
 <body class="container">
 <ul>
     <li><a href="{{ route('post.index') }}"> Posts </a></li>
+    @can('view', auth()->user())
     <li><a href="{{ route('post.create') }}"> Create post</a></li>
+    @endcan
 </ul>
     @yield('content')
 

@@ -23,7 +23,7 @@ Route::get('/', function () {
 # простые роуты
 
 Route::get('/first', function () {
-    return 'this is first page in new lessons';
+    return phpinfo();
 });
 
 # роут с контроллером тут
@@ -45,11 +45,11 @@ Route::get('/oldpost/first', [PostController::class, 'firstOrCreate']);
 Route::get('/oldpost/uporc', [PostController::class, 'updateOrCreate']);
 
 // =================   CRUD  ======================
-Route::group(['namespace'=> 'App\Http\Controllers\Post'], function() {
+Route::group(['namespace'=> 'App\Http\Controllers\Post', 'middleware'=> 'auth'], function() {
 
     Route::get('/posts', 'IndexController')->name('post.index');
 
-    Route::get('/posts/create', 'CreateController')->name('post.create');
+    Route::get('/posts/create', 'CreateController')->name('post.create')->middleware('admin');
 
     Route::post('/posts', 'StoreController')->name('post.store');
 
@@ -70,3 +70,7 @@ Route::group(['namespace'=> 'App\Http\Controllers\Admin', 'prefix'=>'admin'],  f
         Route::get('/post', 'IndexController')->name('admin.post.index');
     });
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
